@@ -1,0 +1,97 @@
+22:58:56 | INFO     | matplotlib.font_manager | generated new fontManager
+23:02:03 | INFO     | __main__ | ============================================================
+23:02:03 | INFO     | __main__ | CHURN PREDICTION — PHASE 1: EXPERIMENT TRACKING
+23:02:03 | INFO     | __main__ | ============================================================
+23:02:03 | INFO     | __main__ | MLflow server reachable at http://localhost:5000
+23:02:03 | ERROR    | __main__ | 
+Dataset not found at /home/rehan/telco_churn_mlops/data/raw/telco.csv
+Download it from Kaggle:
+  https://www.kaggle.com/datasets/blastchar/telco-customer-churn
+Then place the CSV at: /home/rehan/telco_churn_mlops/data/raw/telco.csv
+23:06:09 | INFO     | __main__ | ============================================================
+23:06:09 | INFO     | __main__ | CHURN PREDICTION — PHASE 1: EXPERIMENT TRACKING
+23:06:09 | INFO     | __main__ | ============================================================
+23:06:09 | INFO     | __main__ | MLflow server reachable at http://localhost:5000
+23:06:09 | ERROR    | __main__ | 
+Dataset not found at /home/rehan/telco_churn_mlops/data/raw/telco.csv
+Download it from Kaggle:
+  https://www.kaggle.com/datasets/blastchar/telco-customer-churn
+Then place the CSV at: /home/rehan/telco_churn_mlops/data/raw/telco.csv
+23:15:32 | INFO     | __main__ | ============================================================
+23:15:32 | INFO     | __main__ | CHURN PREDICTION — PHASE 1: EXPERIMENT TRACKING
+23:15:32 | INFO     | __main__ | ============================================================
+23:15:32 | INFO     | __main__ | MLflow server reachable at http://localhost:5000
+23:15:32 | INFO     | __main__ | Dataset found: /home/rehan/telco_churn_mlops/data/raw/telco.csv
+23:15:32 | INFO     | __main__ | 
+Step 1/3 — Preprocessing...
+23:17:30 | INFO     | __main__ | ============================================================
+23:17:30 | INFO     | __main__ | CHURN PREDICTION — PHASE 1: EXPERIMENT TRACKING
+23:17:30 | INFO     | __main__ | ============================================================
+23:17:30 | INFO     | __main__ | MLflow server reachable at http://localhost:5000
+23:17:30 | INFO     | __main__ | Dataset found: /home/rehan/telco_churn_mlops/data/raw/telco.csv
+23:17:30 | INFO     | __main__ | 
+Step 1/3 — Preprocessing...
+23:17:30 | INFO     | __main__ | Preprocessing done in 0.0s
+  Train: 5,634 rows | Test: 1,409 rows
+  Features: 22 | Churn rate: 26.5%
+23:17:30 | INFO     | __main__ | 
+Step 2/3 — Training all models...
+23:25:41 | INFO     | __main__ | ============================================================
+23:25:41 | INFO     | __main__ | CHURN PREDICTION — PHASE 1: EXPERIMENT TRACKING
+23:25:41 | INFO     | __main__ | ============================================================
+23:25:41 | INFO     | __main__ | MLflow server reachable at http://localhost:5000
+23:25:41 | INFO     | __main__ | Dataset found: /home/rehan/telco_churn_mlops/data/raw/telco.csv
+23:25:41 | INFO     | __main__ | 
+Step 1/3 — Preprocessing...
+23:25:41 | INFO     | __main__ | Preprocessing done in 0.0s
+  Train: 5,634 rows | Test: 1,409 rows
+  Features: 22 | Churn rate: 26.5%
+23:25:41 | INFO     | __main__ | 
+Step 2/3 — Training all models...
+23:25:43 | INFO     | utils.mlflow_helpers |   Run logged → run_id=bb60763e861748f4a983211602a59912
+23:25:43 | INFO     | utils.mlflow_helpers |   Metrics: {'accuracy': 0.7402, 'precision': 0.507, 'recall': 0.7754, 'f1_score': 0.6131, 'roc_auc': 0.8457, 'avg_precision': 0.6654}
+23:25:45 | INFO     | utils.mlflow_helpers |   Run logged → run_id=e763b83c85094a39a9f0fdd81e291b24
+23:25:45 | INFO     | utils.mlflow_helpers |   Metrics: {'accuracy': 0.736, 'precision': 0.5017, 'recall': 0.7968, 'f1_score': 0.6157, 'roc_auc': 0.847, 'avg_precision': 0.666}
+23:25:46 | INFO     | utils.mlflow_helpers |   Run logged → run_id=9406ce40c4da48da983b0bf6595548ca
+23:25:46 | INFO     | utils.mlflow_helpers |   Metrics: {'accuracy': 0.7339, 'precision': 0.4992, 'recall': 0.7914, 'f1_score': 0.6122, 'roc_auc': 0.8466, 'avg_precision': 0.665}
+23:25:49 | INFO     | utils.mlflow_helpers |   Run logged → run_id=a909dee042554019bc53ac37d7d5e7ca
+23:25:49 | INFO     | utils.mlflow_helpers |   Metrics: {'accuracy': 0.7331, 'precision': 0.4983, 'recall': 0.7914, 'f1_score': 0.6116, 'roc_auc': 0.8455, 'avg_precision': 0.662}
+23:25:51 | INFO     | utils.mlflow_helpers |   Run logged → run_id=9e8932a50aaa4360b7b47e8c57e26070
+23:25:51 | INFO     | utils.mlflow_helpers |   Metrics: {'accuracy': 0.8055, 'precision': 0.6667, 'recall': 0.5348, 'f1_score': 0.5935, 'roc_auc': 0.8452, 'avg_precision': 0.6608}
+23:25:53 | INFO     | utils.mlflow_helpers |   Run logged → run_id=9c00bf3f7aa44247951d11ce32d70fa4
+23:25:53 | INFO     | utils.mlflow_helpers |   Metrics: {'accuracy': 0.7381, 'precision': 0.5042, 'recall': 0.8048, 'f1_score': 0.62, 'roc_auc': 0.8397, 'avg_precision': 0.6444}
+23:25:55 | INFO     | utils.mlflow_helpers |   Run logged → run_id=5d1bad905d704751bcb21b2a03af02aa
+23:25:55 | INFO     | utils.mlflow_helpers |   Metrics: {'accuracy': 0.7715, 'precision': 0.552, 'recall': 0.738, 'f1_score': 0.6316, 'roc_auc': 0.8379, 'avg_precision': 0.6456}
+23:25:57 | INFO     | utils.mlflow_helpers |   Run logged → run_id=4a3a3eef53c345f99c4ccfce9c19284d
+23:25:57 | INFO     | utils.mlflow_helpers |   Metrics: {'accuracy': 0.758, 'precision': 0.5303, 'recall': 0.7727, 'f1_score': 0.6289, 'roc_auc': 0.8418, 'avg_precision': 0.6519}
+23:26:00 | INFO     | utils.mlflow_helpers |   Run logged → run_id=991f72e57bdd40049ff1b4dd102f8059
+23:26:00 | INFO     | utils.mlflow_helpers |   Metrics: {'accuracy': 0.78, 'precision': 0.5762, 'recall': 0.6471, 'f1_score': 0.6096, 'roc_auc': 0.8344, 'avg_precision': 0.6333}
+23:26:03 | INFO     | utils.mlflow_helpers |   Run logged → run_id=a68412d29b1f40db961f7a1131f21292
+23:26:03 | INFO     | utils.mlflow_helpers |   Metrics: {'accuracy': 0.7757, 'precision': 0.565, 'recall': 0.6738, 'f1_score': 0.6146, 'roc_auc': 0.8354, 'avg_precision': 0.6427}
+23:26:05 | INFO     | utils.mlflow_helpers |   Run logged → run_id=60a4e97fca994b7e8f32fc5bf0093e81
+23:26:05 | INFO     | utils.mlflow_helpers |   Metrics: {'accuracy': 0.7381, 'precision': 0.5041, 'recall': 0.8155, 'f1_score': 0.6231, 'roc_auc': 0.8439, 'avg_precision': 0.659}
+23:26:06 | INFO     | utils.mlflow_helpers |   Run logged → run_id=93e58254569540de83c32994ce67a78b
+23:26:06 | INFO     | utils.mlflow_helpers |   Metrics: {'accuracy': 0.7424, 'precision': 0.5094, 'recall': 0.7968, 'f1_score': 0.6215, 'roc_auc': 0.843, 'avg_precision': 0.6605}
+23:26:08 | INFO     | utils.mlflow_helpers |   Run logged → run_id=a897f58e20b64ca09fa1bb911ae462c7
+23:26:08 | INFO     | utils.mlflow_helpers |   Metrics: {'accuracy': 0.7708, 'precision': 0.5532, 'recall': 0.7086, 'f1_score': 0.6213, 'roc_auc': 0.8387, 'avg_precision': 0.6482}
+23:26:10 | INFO     | utils.mlflow_helpers |   Run logged → run_id=e3716e2ef347471689dfc8829849eda5
+23:26:10 | INFO     | utils.mlflow_helpers |   Metrics: {'accuracy': 0.7346, 'precision': 0.5, 'recall': 0.8128, 'f1_score': 0.6191, 'roc_auc': 0.8455, 'avg_precision': 0.6606}
+23:26:12 | INFO     | utils.mlflow_helpers |   Run logged → run_id=b20e55f44a0e47eca7259af87f6be781
+23:26:12 | INFO     | utils.mlflow_helpers |   Metrics: {'accuracy': 0.7672, 'precision': 0.5477, 'recall': 0.7059, 'f1_score': 0.6168, 'roc_auc': 0.8377, 'avg_precision': 0.6444}
+23:26:12 | INFO     | __main__ | All experiments done in 31.7s
+23:26:12 | INFO     | __main__ | 
+Step 3/3 — Finding best run...
+23:26:12 | INFO     | __main__ | 
+============================================================
+23:26:12 | INFO     | __main__ | EXPERIMENT SUMMARY
+23:26:12 | INFO     | __main__ | ============================================================
+23:26:12 | INFO     | __main__ | Total runs     : 15
+23:26:12 | INFO     | __main__ | Best model     : LogReg_C0.1_solverlbfgs
+23:26:12 | INFO     | __main__ | Best ROC-AUC   : 0.847
+23:26:12 | INFO     | __main__ | Best F1-score  : 0.6157
+23:26:12 | INFO     | __main__ | Best recall    : 0.7968
+23:26:12 | INFO     | __main__ | Run ID         : e763b83c85094a39a9f0fdd81e291b24
+23:26:12 | INFO     | __main__ | ============================================================
+23:26:12 | INFO     | __main__ | 
+View all runs at: http://localhost:5000
+23:26:12 | INFO     | __main__ | Filter by experiment: churn-prediction-baseline

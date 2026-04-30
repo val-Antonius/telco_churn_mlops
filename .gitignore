@@ -1,0 +1,24 @@
+# Python virtual environment
+.venv/
+
+# Python cache
+__pycache__/
+**/*/__pycache__/
+
+# MLflow local data 
+mlruns/
+mlartifacts/
+
+# Artifacts & Processed data
+artifacts/
+data/processed/
+
+# Dataset 
+data/raw/telco.csv
+
+# Environment variables
+.env
+
+# OS files
+.DS_Store
+Thumbs.db
