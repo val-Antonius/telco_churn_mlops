@@ -1,0 +1,109 @@
+# dvc.yaml
+# ─────────────────────────────────────────────────────────────────────────────
+# Pipeline DAG: prepare → train → evaluate
+#
+# How DVC uses this file:
+#   deps   — files/dirs this stage READS  (change → stage re-runs)
+#   params — keys in params.yaml this stage READS (change → stage re-runs)
+#   outs   — files/dirs this stage WRITES (cached by DVC, not committed to git)
+#   metrics— like outs, but DVC knows they contain numeric metrics
+#   plots  — like outs, but DVC can render them as charts
+#
+# Run the full pipeline:   dvc repro
+# Run one stage:           dvc repro prepare
+# Show DAG:                dvc dag
+# Compare experiments:     dvc params diff
+#                          dvc metrics diff
+# ─────────────────────────────────────────────────────────────────────────────
+
+stages:
+
+  # ── Stage 1: prepare ───────────────────────────────────────────────────────
+  # Reads raw CSV → cleans, engineers features, encodes, splits → writes
+  # processed train.csv and test.csv.
+  # Re-runs when: raw data changes OR any data/feature param changes.
+  prepare:
+    cmd: python src/pipeline/stage_prepare.py
+    deps:
+      - src/pipeline/stage_prepare.py
+      - src/data/preprocess.py
+      - src/pipeline/params_loader.py
+      - data/raw/telco.csv
+    params:
+      - base.random_state
+      - data.target_column
+      - data.test_size
+      - data.drop_columns
+      - features.binary_cols
+      - features.multi_cat_cols
+      - features.numeric_cols
+      - features.tenure_bins
+      - features.tenure_labels
+    outs:
+      - data/processed/train.csv
+      - data/processed/test.csv
+      - artifacts/models/scaler.pkl:
+          cache: true
+      - artifacts/models/feature_names.json:
+          cache: true
+
+  # ── Stage 2: train ─────────────────────────────────────────────────────────
+  # Reads processed data → trains selected model → writes serialized model.
+  # Re-runs when: processed data changes OR any train.* param changes.
+  train:
+    cmd: python src/pipeline/stage_train.py
+    deps:
+      - src/pipeline/stage_train.py
+      - src/models/train.py
+      - src/utils/mlflow_helpers.py
+      - src/pipeline/params_loader.py
+      - data/processed/train.csv
+      - data/processed/test.csv
+      - artifacts/models/scaler.pkl
+      - artifacts/models/feature_names.json
+    params:
+      - base.random_state
+      - train.model_type
+      - train.logistic_regression
+      - train.random_forest
+      - train.xgboost
+    outs:
+      - artifacts/models/best_model.pkl:
+          cache: true
+
+  # ── Stage 3: evaluate ──────────────────────────────────────────────────────
+  # Reads model + test data → computes metrics → writes JSON metrics + plots.
+  # Re-runs when: model changes OR test data changes.
+  evaluate:
+    cmd: python src/pipeline/stage_evaluate.py
+    deps:
+      - src/pipeline/stage_evaluate.py
+      - src/utils/mlflow_helpers.py
+      - src/pipeline/params_loader.py
+      - artifacts/models/best_model.pkl
+      - artifacts/models/feature_names.json
+      - data/processed/test.csv
+    params:
+      - data.target_column
+      - evaluate.metrics_path
+      - evaluate.plots_dir
+      - evaluate.report_path
+    metrics:
+      - artifacts/reports/metrics.json:
+          cache: false    # keep in git so dvc metrics diff works across commits
+    plots:
+      - artifacts/reports/plots/roc_curve.csv:
+          cache: false
+          x: fpr
+          y: tpr
+          title: ROC Curve
+      - artifacts/reports/plots/pr_curve.csv:
+          cache: false
+          x: recall
+          y: precision
+          title: Precision-Recall Curve
+    outs:
+      - artifacts/reports/classification_report.txt:
+          cache: false
+      - artifacts/reports/plots/confusion_matrix.png:
+          cache: false

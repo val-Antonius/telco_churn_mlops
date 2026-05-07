@@ -9,8 +9,13 @@ __pycache__/
 mlruns/
 mlartifacts/
 
-# Artifacts & Processed data
-artifacts/
+# Artifacts 
+artifacts/*
+!artifacts/reports/
+artifacts/reports/*
+!artifacts/reports/metrics.json
+
+# Processed data
 data/processed/
 
 # Dataset 

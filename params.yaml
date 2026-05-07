@@ -1,0 +1,92 @@
+# params.yaml
+# ─────────────────────────────────────────────────────────────────────────────
+# Single source of truth for every tunable parameter in the pipeline.
+# DVC reads this file to detect when a stage needs to re-run.
+# Python scripts read it via src/pipeline/params_loader.py
+#
+# To run a full experiment with different settings:
+#   1. Edit values here
+#   2. Run: dvc repro
+#   DVC will only re-run stages whose params or deps have changed.
+# ─────────────────────────────────────────────────────────────────────────────
+
+base:
+  random_state: 42
+  project_name: churn-mlops
+
+data:
+  raw_path: data/raw/telco.csv
+  train_path: data/processed/train.csv
+  test_path: data/processed/test.csv
+  target_column: Churn
+  test_size: 0.2
+  drop_columns:
+    - customerID
+
+features:
+  binary_cols:
+    - gender
+    - Partner
+    - Dependents
+    - PhoneService
+    - PaperlessBilling
+  multi_cat_cols:
+    - MultipleLines
+    - InternetService
+    - OnlineSecurity
+    - OnlineBackup
+    - DeviceProtection
+    - TechSupport
+    - StreamingTV
+    - StreamingMovies
+    - Contract
+    - PaymentMethod
+  numeric_cols:
+    - tenure
+    - MonthlyCharges
+    - TotalCharges
+  # Derived features (engineered in prepare stage)
+  tenure_bins:
+    - -1
+    - 12
+    - 36
+    - 999
+  tenure_labels:
+    - new
+    - mid
+    - long
+
+train:
+  # Active model: one of logistic_regression | random_forest | xgboost
+  model_type: xgboost
+  # Model output path (used by DVC as stage output)
+  model_path: artifacts/models/best_model.pkl
+  scaler_path: artifacts/models/scaler.pkl
+  feature_names_path: artifacts/models/feature_names.json
+
+  logistic_regression:
+    C: 1.0
+    solver: lbfgs
+    max_iter: 1000
+    class_weight: balanced
+
+  random_forest:
+    n_estimators: 200
+    max_depth: 8
+    min_samples_split: 5
+    class_weight: balanced
+    n_jobs: -1
+
+  xgboost:
+    n_estimators: 200
+    max_depth: 4
+    learning_rate: 0.05
+    subsample: 0.8
+    scale_pos_weight: 3
+    eval_metric: logloss
+    verbosity: 0
+
+evaluate:
+  metrics_path: artifacts/reports/metrics.json
+  plots_dir: artifacts/reports/plots
+  report_path: artifacts/reports/classification_report.txt
