@@ -58,7 +58,7 @@ features:
 
 train:
   # Active model: one of logistic_regression | random_forest | xgboost
-  model_type: xgboost
+  model_type: random_forest
   # Model output path (used by DVC as stage output)
   model_path: artifacts/models/best_model.pkl
   scaler_path: artifacts/models/scaler.pkl

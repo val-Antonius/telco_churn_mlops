@@ -120,7 +120,7 @@ stages:
           solver: lbfgs
           max_iter: 1000
           class_weight: balanced
-        train.model_type: xgboost
+        train.model_type: random_forest
         train.random_forest:
           n_estimators: 200
           max_depth: 8
@@ -138,15 +138,15 @@ stages:
     outs:
     - path: artifacts/models/best_model.pkl
       hash: md5
-      md5: 8bd89306d2f6f9e5628738f77b5b62f4
-      size: 328752
+      md5: 1a81de714eab74806cbbe0e0bed380ab
+      size: 4784409
   evaluate:
     cmd: python src/pipeline/stage_evaluate.py
     deps:
     - path: artifacts/models/best_model.pkl
       hash: md5
-      md5: 8bd89306d2f6f9e5628738f77b5b62f4
-      size: 328752
+      md5: 1a81de714eab74806cbbe0e0bed380ab
+      size: 4784409
     - path: artifacts/models/feature_names.json
       hash: md5
       md5: 213fc7ff4779a6bad6bf70bd506ed5bd
@@ -177,21 +177,21 @@ stages:
     outs:
     - path: artifacts/reports/classification_report.txt
       hash: md5
-      md5: c42aacba021b28e55070833a88df139d
+      md5: 9dc49ac19d02ab4150c9e78fa0638e61
       size: 326
     - path: artifacts/reports/metrics.json
       hash: md5
-      md5: 8546400032be8d8440214b77a2e55640
+      md5: fa9c23cc6a7f955f83b7a49f9bb157fc
       size: 136
     - path: artifacts/reports/plots/confusion_matrix.png
       hash: md5
-      md5: 845af24761e8ee7126e23c20832a96ff
-      size: 23990
+      md5: 5ee07125ec89130b1c9ed6cb73b1dc3d
+      size: 24193
     - path: artifacts/reports/plots/pr_curve.csv
       hash: md5
-      md5: 9a57f8dbe80ce5ecf85ebacd2486d9d6
-      size: 52144
+      md5: 39b93f459459daa4009ca83acdefb115
+      size: 51325
     - path: artifacts/reports/plots/roc_curve.csv
       hash: md5
-      md5: df2ce1b3b3e1b3df92c1806098b5bfcf
-      size: 14755
+      md5: 4cf298210df79bd13a201e6f07dff50a
+      size: 15718
