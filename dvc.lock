@@ -1,0 +1,197 @@
+schema: '2.0'
+stages:
+  prepare:
+    cmd: python src/pipeline/stage_prepare.py
+    deps:
+    - path: data/raw/telco.csv
+      hash: md5
+      md5: 0f9de68e012bd3aed5fa7cdc9fc421af
+      size: 977501
+      isexec: true
+    - path: src/data/preprocess.py
+      hash: md5
+      md5: 961d812a81462fbb52105d673bfb71ff
+      size: 3312
+      isexec: true
+    - path: src/pipeline/params_loader.py
+      hash: md5
+      md5: 4c7ce9ec62214a102c1f2154b84c1b74
+      size: 4104
+    - path: src/pipeline/stage_prepare.py
+      hash: md5
+      md5: e80a43e2abe0915060781dfe68566677
+      size: 7724
+    params:
+      params.yaml:
+        base.random_state: 42
+        data.drop_columns:
+        - customerID
+        data.target_column: Churn
+        data.test_size: 0.2
+        features.binary_cols:
+        - gender
+        - Partner
+        - Dependents
+        - PhoneService
+        - PaperlessBilling
+        features.multi_cat_cols:
+        - MultipleLines
+        - InternetService
+        - OnlineSecurity
+        - OnlineBackup
+        - DeviceProtection
+        - TechSupport
+        - StreamingTV
+        - StreamingMovies
+        - Contract
+        - PaymentMethod
+        features.numeric_cols:
+        - tenure
+        - MonthlyCharges
+        - TotalCharges
+        features.tenure_bins:
+        - -1
+        - 12
+        - 36
+        - 999
+        features.tenure_labels:
+        - new
+        - mid
+        - long
+    outs:
+    - path: artifacts/models/feature_names.json
+      hash: md5
+      md5: 213fc7ff4779a6bad6bf70bd506ed5bd
+      size: 893
+    - path: artifacts/models/scaler.pkl
+      hash: md5
+      md5: 031b3ea84c06a2d8c67a3e2694317163
+      size: 1055
+    - path: data/processed/test.csv
+      hash: md5
+      md5: 1beeaa9c80ca4a83c1f4ad4e94b8cf26
+      size: 344567
+    - path: data/processed/train.csv
+      hash: md5
+      md5: dcc3f75ced433407a7cebbc8d33bbb14
+      size: 1374861
+  train:
+    cmd: python src/pipeline/stage_train.py
+    deps:
+    - path: artifacts/models/feature_names.json
+      hash: md5
+      md5: 213fc7ff4779a6bad6bf70bd506ed5bd
+      size: 893
+    - path: artifacts/models/scaler.pkl
+      hash: md5
+      md5: 031b3ea84c06a2d8c67a3e2694317163
+      size: 1055
+    - path: data/processed/test.csv
+      hash: md5
+      md5: 1beeaa9c80ca4a83c1f4ad4e94b8cf26
+      size: 344567
+    - path: data/processed/train.csv
+      hash: md5
+      md5: dcc3f75ced433407a7cebbc8d33bbb14
+      size: 1374861
+    - path: src/models/train.py
+      hash: md5
+      md5: 2e3a8f401472809c5e725a79cd2bc620
+      size: 5231
+      isexec: true
+    - path: src/pipeline/params_loader.py
+      hash: md5
+      md5: 4c7ce9ec62214a102c1f2154b84c1b74
+      size: 4104
+    - path: src/pipeline/stage_train.py
+      hash: md5
+      md5: cda2318aec78fb206c1759682039b7b4
+      size: 8205
+    - path: src/utils/mlflow_helpers.py
+      hash: md5
+      md5: cf932e086d9a548353a314ad2b1913bd
+      size: 7730
+      isexec: true
+    params:
+      params.yaml:
+        base.random_state: 42
+        train.logistic_regression:
+          C: 1.0
+          solver: lbfgs
+          max_iter: 1000
+          class_weight: balanced
+        train.model_type: xgboost
+        train.random_forest:
+          n_estimators: 200
+          max_depth: 8
+          min_samples_split: 5
+          class_weight: balanced
+          n_jobs: -1
+        train.xgboost:
+          n_estimators: 200
+          max_depth: 4
+          learning_rate: 0.05
+          subsample: 0.8
+          scale_pos_weight: 3
+          eval_metric: logloss
+          verbosity: 0
+    outs:
+    - path: artifacts/models/best_model.pkl
+      hash: md5
+      md5: 8bd89306d2f6f9e5628738f77b5b62f4
+      size: 328752
+  evaluate:
+    cmd: python src/pipeline/stage_evaluate.py
+    deps:
+    - path: artifacts/models/best_model.pkl
+      hash: md5
+      md5: 8bd89306d2f6f9e5628738f77b5b62f4
+      size: 328752
+    - path: artifacts/models/feature_names.json
+      hash: md5
+      md5: 213fc7ff4779a6bad6bf70bd506ed5bd
+      size: 893
+    - path: data/processed/test.csv
+      hash: md5
+      md5: 1beeaa9c80ca4a83c1f4ad4e94b8cf26
+      size: 344567
+    - path: src/pipeline/params_loader.py
+      hash: md5
+      md5: 4c7ce9ec62214a102c1f2154b84c1b74
+      size: 4104
+    - path: src/pipeline/stage_evaluate.py
+      hash: md5
+      md5: 55a6b375db405e948709bb224e47df9a
+      size: 6321
+    - path: src/utils/mlflow_helpers.py
+      hash: md5
+      md5: cf932e086d9a548353a314ad2b1913bd
+      size: 7730
+      isexec: true
+    params:
+      params.yaml:
+        data.target_column: Churn
+        evaluate.metrics_path: artifacts/reports/metrics.json
+        evaluate.plots_dir: artifacts/reports/plots
+        evaluate.report_path: artifacts/reports/classification_report.txt
+    outs:
+    - path: artifacts/reports/classification_report.txt
+      hash: md5
+      md5: c42aacba021b28e55070833a88df139d
+      size: 326
+    - path: artifacts/reports/metrics.json
+      hash: md5
+      md5: 8546400032be8d8440214b77a2e55640
+      size: 136
+    - path: artifacts/reports/plots/confusion_matrix.png
+      hash: md5
+      md5: 845af24761e8ee7126e23c20832a96ff
+      size: 23990
+    - path: artifacts/reports/plots/pr_curve.csv
+      hash: md5
+      md5: 9a57f8dbe80ce5ecf85ebacd2486d9d6
+      size: 52144
+    - path: artifacts/reports/plots/roc_curve.csv
+      hash: md5
+      md5: df2ce1b3b3e1b3df92c1806098b5bfcf
+      size: 14755
